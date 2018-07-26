@@ -1,0 +1,37 @@
+emails:
+ - 
+columns:
+ - column: 4
+   round: 0
+ - column: 5
+   round: 0
+ - column: 6
+   round: -1
+ - column: 7
+   round: -1
+ - column: 8
+   round: 3
+ - column: 9
+   round: 3
+ - column: 14
+   round: 1
+ - column: 15
+   round: 1
+ - column: 16
+   round: 1
+ - column: 17
+   round: 1
+ - column: 18
+   round: 1
+ - column: 19
+   round: 1
+ - column: 20
+   round: 1
+ - column: 22
+   round: 1
+ - column: 23
+   round: 1
+ - column: 24
+   round: 1
+ - column: 25
+   round: 1

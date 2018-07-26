@@ -1,0 +1,3 @@
+local_data_dir: /home/shared/licor_data
+backup_data_dir: /file-server/themes/GEGC/bernacch_lab/licor_data
+backup_server: file-server.igb.illinois.edu

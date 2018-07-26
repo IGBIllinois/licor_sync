@@ -1,0 +1,5 @@
+- name:
+  file_name:
+  ip:
+  data_dir:
+  remove_source_files:

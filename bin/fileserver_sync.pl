@@ -1,0 +1,32 @@
+#!/usr/bin/perl
+
+# fileserver_sync.pl
+# Author: Joe Leigh <jleigh@illinois.edu>
+# Copyright 2016 Institute for Genomic Biology
+# 
+# Script to rsync data from each tower
+
+use YAML qw(LoadFile);
+use File::Path qw(make_path);
+use POSIX qw(strftime);
+use lib '/usr/local/licorSync/lib/perl';
+use Licor;
+
+sub current_time {
+	return strftime("[%Y-%m-%d %H:%M:%S] ",localtime);
+}
+
+my $local_data_dir = $Licor::config->{'local_data_dir'};
+my $backup_data_dir = $Licor::config->{'backup_data_dir'};
+my $backup_server = $Licor::config->{'backup_server'};
+	
+foreach my $tower (@{$Licor::towers}){
+	my $tower_name = $tower->{'name'};
+	print "\n".current_time()."Beginning rsync for $tower_name...\n";
+
+	print  "/usr/bin/rsync -auv --timeout=1000 $local_data_dir/$tower_name/compressed $backup_server:$backup_data_dir/$tower_name/\n";
+	system "/usr/bin/rsync -auv --timeout=1000 $local_data_dir/$tower_name/compressed $backup_server:$backup_data_dir/$tower_name/";
+
+	print "\n".current_time()."Done/";
+}
+
