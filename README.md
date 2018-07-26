@@ -9,11 +9,11 @@ git clone https://github.com/IGBIllinois/licor_sync.git
 ## Syncing Data
 * Copy /etc/licor_towers.yml.dist to /etc/licor_towers.yml
 * Edit /etc/licor_towers.yml for each device to sync
-** name: name of the folder to place the data in
-** file_name: is the file name suffix on the data on the licor device
-** ip: IP address of the device
-** data_dir: full path to the raw data on the device
-** remove_source_files: true/false - delete the data from the device
+    * name: name of the folder to place the data in
+    * file_name: is the file name suffix on the data on the licor device
+    * ip: IP address of the device
+    * data_dir: full path to the raw data on the device
+    * remove_source_files: true/false - delete the data from the device
 ```
 - name: tower_1
   file_name: AIU-0468
