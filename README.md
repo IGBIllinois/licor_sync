@@ -1,12 +1,12 @@
 # Licor Sync
 * Syncs data from Licor 7200 and 7500 devices to a linux server using rsync
 
-# Configuration
+## Configuration
 * Download the repository
 ```
 git clone https://github.com/IGBIllinois/licor_sync.git
 ```
-## Syncing Data
+### Syncing Data
 * Copy /etc/licor_towers.yml.dist to /etc/licor_towers.yml
 * Edit /etc/licor_towers.yml for each device to sync
     * name: name of the folder to place the data in
@@ -30,7 +30,7 @@ ssh-copy-id licor@192.168.0.100
 10 0-23/4 * * * root perl /usr/local/licorSync/bin/device_sync.pl
 ```
 
-## Automatically Archiving Data
+### Automatically Archiving Data
 * This tar.gz the data by day
 * Add /bin/daily_sort.pl to /etc/crontab
 ```
