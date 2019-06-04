@@ -1,0 +1,5 @@
+10 0-23/4 * * * root perl /usr/local/licorSync/bin/device_sync.pl
+00 3 * * * root perl /usr/local/licorSync/bin/daily_sort.pl
+00 4 * * * root perl /usr/local/licorSync/bin/daily_sort_batch.pl
+00 2 4 * * root perl /usr/local/licorSync/bin/remote_delete.pl
+00 1 * * * root perl /usr/local/licorSync/bin/fileserver_sync.pl
