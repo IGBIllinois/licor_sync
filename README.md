@@ -40,9 +40,9 @@ cp etc/cron.dist etc/cron
 * Edit etc/cron to suit the times you want the data to sync and be compressed.
 * Create symlink of etc/cron to /etc/cron.d/licorsync
 * Below are the list of scripts that can be added to cron
-** device_sync.pl - Rsyncs data from licor devices to local directory
-** daily_sort.pl - Script to archive licor data from the previous day
-** daily_sort_batch.pl - Script to archive licor data older than a day 
-** fileserver_sync.pl - syncs data from the local folders to the file-server
-** remote_delete.pl - Script to remotely delete data older than 6 months from licor devices
+* device_sync.pl - Rsyncs data from licor devices to local directory
+* daily_sort.pl - Script to archive licor data from the previous day
+* daily_sort_batch.pl - Script to archive licor data older than a day 
+* fileserver_sync.pl - syncs data from the local folders to the file-server
+* remote_delete.pl - Script to remotely delete data older than 6 months from licor devices
 
