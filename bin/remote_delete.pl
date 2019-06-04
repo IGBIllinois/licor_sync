@@ -1,7 +1,12 @@
-#! /usr/bin/perl
+#! /usr/bin/env perl
+# remote_delete.pl
+# Author: Joe Leigh <jleigh@illinois.edu>
+# Copyright 2016 Institute for Genomic Biology
+#
+# Script to remotely delete data older than 6 months from licor devices
 
 use String::Util qw(trim);
-use lib '/usr/local/licorSync/lib/perl';
+use lib '../lib/perl';
 use Licor;
 
 my $archive_month = trim(`date +"\%m" -d '6 months ago'`);

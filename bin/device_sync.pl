@@ -1,4 +1,4 @@
-#!/usr/bin/perl
+#!/usr/bin/env perl
 
 # device_sync.pl
 # Author: Joe Leigh <jleigh@illinois.edu>
@@ -9,7 +9,7 @@
 use YAML qw(LoadFile);
 use File::Path qw(make_path);
 use POSIX qw(strftime);
-use lib '/usr/local/licorSync/lib/perl';
+use lib '../lib/perl';
 use Licor;
 use LicorDigest;
 use Data::Dumper;
@@ -39,7 +39,7 @@ foreach my $tower (@{$Licor::towers}){
 		print "/usr/bin/rsync -auv ".$options."--timeout=1000 --chmod=o=r,g=r,u=r --include=*.ghg --exclude=* licor\@$ip:$data_dir $local_data_dir/$tower_name/raw\n";
 		system "/usr/bin/rsync -auv ".$options."--timeout=1000 --chmod=o=r,g=r,u=r --include=*.ghg --exclude=* licor\@$ip:$data_dir $local_data_dir/$tower_name/raw";
 		`chmod 755 $local_data_dir/$tower_name/raw`;
-		print "\n".current_time()."Done/";
+		print "\n".current_time()."Done\n";
 	}
 
 	if(exists $tower->{'digest'} and $tower->{'digest'} and not $timenow[2]>=4){

@@ -1,4 +1,4 @@
-#!/usr/bin/perl
+#!/usr/bin/env perl
 
 # daily_sort.pl
 # Author: Joe Leigh <jleigh@illinois.edu>
@@ -9,7 +9,7 @@ use strict;
 use YAML qw(LoadFile);
 use String::Util qw(trim);
 use File::Path qw(make_path);
-use lib '/usr/local/licorSync/lib/perl';
+use lib '../lib/perl';
 use Licor;
 use Data::Dumper;
 

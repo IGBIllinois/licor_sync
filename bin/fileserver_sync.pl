@@ -1,15 +1,15 @@
-#!/usr/bin/perl
+#!/usr/bin/env perl
 
 # fileserver_sync.pl
 # Author: Joe Leigh <jleigh@illinois.edu>
 # Copyright 2016 Institute for Genomic Biology
 # 
-# Script to rsync data from each tower
+# Script to rsync data from local folder to file-server
 
 use YAML qw(LoadFile);
 use File::Path qw(make_path);
 use POSIX qw(strftime);
-use lib '/usr/local/licorSync/lib/perl';
+use lib '../lib/perl';
 use Licor;
 
 sub current_time {

@@ -1,7 +1,13 @@
 # Licor Sync
 * Syncs data from Licor 7200 and 7500 devices to a linux server using rsync
 
-## Configuration
+## Requirements
+* rsync
+* Perl
+* Perl Yaml
+* Perl Data-Dumper
+
+## Installation
 * Download the repository
 ```
 git clone https://github.com/IGBIllinois/licor_sync.git
@@ -25,14 +31,18 @@ git clone https://github.com/IGBIllinois/licor_sync.git
 ```
 ssh-copy-id licor@192.168.0.100
 ```
-* Add /bin/device_sync.pl to /etc/crontab
-```
-10 0-23/4 * * * root perl /usr/local/licorSync/bin/device_sync.pl
-```
 
-### Automatically Archiving Data
-* This tar.gz the data by day
-* Add /bin/daily_sort.pl to /etc/crontab
+### Setup Cron
+* An example cron file is at etc/cron.dist.  Copy etc/cron.dist to etc/cron
 ```
-00 3 * * * root perl /usr/local/licorSync/bin/daily_sort.pl
+cp etc/cron.dist etc/cron
 ```
+* Edit etc/cron to suit the times you want the data to sync and be compressed.
+* Create symlink of etc/cron to /etc/cron.d/licorsync
+* Below are the list of scripts that can be added to cron
+** device_sync.pl - Rsyncs data from licor devices to local directory
+** daily_sort.pl - Script to archive licor data from the previous day
+** daily_sort_batch.pl - Script to archive licor data older than a day 
+** fileserver_sync.pl - syncs data from the local folders to the file-server
+** remote_delete.pl - Script to remotely delete data older than 6 months from licor devices
+
