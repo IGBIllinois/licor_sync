@@ -1,4 +1,4 @@
-#!/usr/bin/perl
+#!/usr/bin/env perl
 # LicorDigest.pm
 # Author: Joe Leigh <jleigh@illinois.edu>
 # Parses the last line of a licor data file for inclusion in a nightly digest
@@ -10,8 +10,9 @@ use File::Path qw(make_path);
 use YAML::Any qw(LoadFile);
 use Data::Dumper;
 use MIME::Lite;
+use FindBin qw($Bin);
 
-my $config = LoadFile('/usr/local/licorSync/etc/licor_digest.yml');
+my $config = LoadFile($Bin . '/../etc/licor_digest.yml');
 
 sub noon_file {
 	my $tower = shift;

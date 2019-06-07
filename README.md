@@ -6,6 +6,7 @@
 * Perl
 * Perl Yaml
 * Perl Data-Dumper
+* Perl MIME-Lite
 
 ## Installation
 * Download the repository

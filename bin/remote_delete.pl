@@ -6,7 +6,8 @@
 # Script to remotely delete data older than 6 months from licor devices
 
 use String::Util qw(trim);
-use lib '../lib/perl';
+use FindBin qw($Bin);
+use lib $Bin . '/../lib/perl';
 use Licor;
 
 my $archive_month = trim(`date +"\%m" -d '6 months ago'`);
