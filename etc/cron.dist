@@ -1,3 +1,9 @@
+####Cron Script#####
+#
+# Place in your systems cron.d folder.  Most systems it is at /etc/cron.d.
+#
+#
+
 10 0-23/4 * * * root perl /usr/local/licor_sync/bin/device_sync.pl
 00 3 * * * root perl /usr/local/licor_sync/bin/daily_sort.pl
 00 4 * * * root perl /usr/local/licor_sync/bin/daily_sort_batch.pl
