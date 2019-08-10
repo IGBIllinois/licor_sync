@@ -25,8 +25,9 @@ foreach my $tower (@{$Licor::towers}){
 	my $tower_name = $tower->{'name'};
 	print "\n".current_time()."Beginning rsync for $tower_name...\n";
 
-	print  "/usr/bin/rsync -auv --timeout=1000 $local_data_dir/$tower_name/compressed $backup_server:$backup_data_dir/$tower_name/\n";
-	system "/usr/bin/rsync -auv --timeout=1000 $local_data_dir/$tower_name/compressed $backup_server:$backup_data_dir/$tower_name/";
+	my $cmd =  "/usr/bin/rsync --chmod=D2770,F660 --ignore-existing -rtuv --timeout=1000 $local_data_dir/$tower_name/compressed $backup_server:$backup_data_dir/$tower_name/\n";
+	print $cmd;
+	system $cmd;
 
 	print "\n".current_time()."Done/";
 }
