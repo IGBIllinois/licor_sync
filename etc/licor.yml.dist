@@ -1,3 +1,6 @@
 local_data_dir: 
 backup_data_dir:
 backup_server:
+inactivity_threshold: 1209600 # 2 weeks
+inactivity_email_to:
+inactivity_email_from:

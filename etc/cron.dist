@@ -9,3 +9,4 @@
 00 4 * * * root perl /usr/local/licor_sync/bin/daily_sort_batch.pl
 00 2 4 * * root perl /usr/local/licor_sync/bin/remote_delete.pl
 00 1 * * * root perl /usr/local/licor_sync/bin/fileserver_sync.pl
+30 7 * * * root perl /usr/local/licor_sync/bin/check_inactive_towers.pl
