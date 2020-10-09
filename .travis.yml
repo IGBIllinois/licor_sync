@@ -1,0 +1,19 @@
+language: perl
+
+branches:
+    only:
+    - master
+
+services:
+    - mysql
+
+perl:
+    - "5.26"
+
+install:
+    - echo "" > /dev/null
+
+script:
+    - if find . -name '*.pl' -exec perl -c {} 2>&1 \; | grep "syntax error"; then exit 1; fi
+    - if find . -name '*.cgi' -exec perl -c {} 2>&1 \; | grep "syntax error"; then exit 1; fi
+    - if find . -name '*.pm' -exec perl -c {} 2>&1 \; | grep "syntax error"; then exit 1; fi 
