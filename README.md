@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.com/IGBIllinois/licor_sync.svg?branch=master)](https://travis-ci.com/IGBIllinois/licor_sync)
+
 # Licor Sync
 * Syncs data from Licor 7200 and 7500 devices to a linux server using rsync
 
