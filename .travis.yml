@@ -11,7 +11,7 @@ perl:
     - "5.26"
 
 install:
-    - echo "" > /dev/null
+    - cpanm -n -q --skip-satisified --installdeps .
 
 script:
     - if find . -name '*.pl' -exec perl -c {} 2>&1 \; | grep "syntax error"; then exit 1; fi
