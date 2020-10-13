@@ -13,7 +13,14 @@
   * Perl Email::MIME
 
 ## Installation
-* Download the repository
+* Download the repository or download a tag release
+```
+git clone https://github.com/IGBIllinois/licor_sync.git
+```
+* Install Perl Modules using cpanm
+```
+cpanm --installdeps .
+```
 
 ### Syncing Data
 * Copy /etc/licor.yml.dist to /etc/licor.yml
