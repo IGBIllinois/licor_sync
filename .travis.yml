@@ -4,9 +4,6 @@ branches:
     only:
     - master
 
-services:
-    - mysql
-
 perl:
     - "5.16"
     - "5.26"
