@@ -63,4 +63,8 @@ if($email_body ne ""){
     );
 
     sendmail($message);
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 3451e0b987352c8f39ce52047c2f6546f2b2c119
