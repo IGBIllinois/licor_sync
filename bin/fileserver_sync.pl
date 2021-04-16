@@ -30,6 +30,6 @@ foreach my $tower (@{$Licor::towers}){
 	print $cmd;
 	system $cmd;
 
-	print "\n".current_time()."Done/";
+	print "\n".current_time()."Done\n";
 }
 
