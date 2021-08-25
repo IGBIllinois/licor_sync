@@ -7,7 +7,3 @@ inactivity_email_to:
 email_from:
 smtp_host: localhost
 smtp_port: 25
-smtp_username:
-smtp_password:
-smtp_tls: false
-smtp_ssl: false

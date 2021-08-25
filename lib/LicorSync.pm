@@ -1,5 +1,9 @@
 package LicorSync;
 use strict;
-use warings;
+use warnings;
 
-our $VERSION = 1.02;
+use constant VERSION => 1.02;
+
+sub get_version {
+	return VERSION;
+}

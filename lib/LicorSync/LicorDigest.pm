@@ -2,7 +2,7 @@
 # Author: Joe Leigh <jleigh@illinois.edu>
 # Parses the last line of a licor data file for inclusion in a nightly digest
 use strict;
-$|++;
+#$|++;
 package LicorSync::LicorDigest;
 
 use File::Path qw(make_path);
@@ -10,8 +10,29 @@ use YAML::Any qw(LoadFile);
 use Data::Dumper;
 use MIME::Lite;
 use FindBin qw($Bin);
+use Email::MessageID;
 
-my $config = LoadFile($Bin . '/../etc/licor_digest.yml');
+use constant LICOR_DIGEST_CONFIG => 'licor_digest.yml';
+use constant LICOR_CONFIG => 'licor.yml';
+use constant LICOR_TOWERS_CONFIG => 'licor_towers.yml';
+
+unless (-e $Bin . '/../etc/' . LICOR_DIGEST_CONFIG) {
+        print "Config file /etc/" . LICOR_DIGEST_CONFIG . " does not exist\n";
+	exit 1;
+}
+our $digest_config = LoadFile($Bin . '/../etc/' . LICOR_DIGEST_CONFIG);
+unless (-e $Bin . '/../etc/' . LICOR_CONFIG) {
+        print "Config file /etc/" . LICOR_CONFIG . " does not exist\n";
+        exit 1;
+}
+our $config = LoadFile($Bin . '/../etc/' . LICOR_CONFIG);
+
+unless (-e $Bin . '/../etc/' . LICOR_TOWERS_CONFIG) {
+        print "Config file /etc/" . LICOR_TOWERS_CONFIG . " does not exist\n";
+        exit 1;
+}
+our $towers = LoadFile($Bin . '/../etc/' . LICOR_TOWERS_CONFIG);
+
 
 sub noon_file {
 	my $tower = shift;
@@ -33,7 +54,7 @@ sub digest {
 	}
 
 	# TODO pull from config file
-	my $columns = $config->{columns};
+	my $columns = $digest_config->{columns};
 
 	my $data_dir = "/home/shared/licor_data/".$tower->{name}."/raw/";
 	my $ghgFileName = LicorDigest::noon_file($tower);
@@ -107,14 +128,16 @@ sub digest {
 sub emailDigest {
 	my $digest = shift;
 
-	my $recipientArr = $config->{emails};
+	my $recipientArr = $digest_config->{emails};
 	my $recipientStr = join ",", @{$recipientArr};
 
 	my $message = MIME::Lite->new(
-		From => 'do-not-reply@igb.illinois.edu',
+		From => $config->{email_from},
 		To => $recipientStr,
 		Subject => 'Licor Data Digest',
-		Data => $digest);
-
-	$message->send;
+		'Message-ID' => Email::MessageID->new->in_brackets,
+		Data => $digest,
+		);
+	
+	$message->send('smtp',$config->{smtp_host},Timeout=>60,Port=>$config->{smtp_port});
 }

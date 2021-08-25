@@ -7,8 +7,8 @@
 # Script to check raw data for inactivity
 
 use POSIX;
-use Email::MIME;
-use Email::Sender::Simple qw(sendmail);
+use MIME::Lite;
+use Email::MessageID;
 use FindBin;
 use File::Spec;
 use lib File::Spec->catdir($FindBin::Bin, '..', 'lib');
@@ -30,7 +30,6 @@ foreach my $tower (@{$Licor::towers}){
     foreach my $file (@raw_files){
         if(!($file =~ m/^\./m)){
             my $modify_time = (stat("$raw_dir/$file"))[9];
-            # print "$file: \t$modify_time\n";
             if($modify_time > $latest_time){
                 $latest_time = $modify_time;
             }
@@ -47,21 +46,18 @@ foreach my $tower (@{$Licor::towers}){
 }
 
 if($email_body ne ""){
-    my $from = $Licor::config->{'email_from'};
-    my $to = $Licor::config->{'inactivity_email_to'};
-    my $message = Email::MIME->create(
-        header_str => [
-            From => $from,
-            To => $to,
-            Subject => 'Licor data not syncing',
-        ],
-        attributes => {
-            encoding => 'quoted-printable',
-            charset => 'ISO-8859-1',
-        },
-        body_str => "The following licor tower(s) have not synced in a while:\n\n$email_body",
-    );
+	my $from = $Licor::config->{'email_from'};
+	my $to = $Licor::config->{'inactivity_email_to'};
+        my $to = join ",", @{$to;
 
-    sendmail($message);
+	my $message = MIME::Lite->new(
+		From => $config->{email_from},
+		To => $to,
+		Subject => 'Licor data not syncing',
+		'Message-ID' => Email::MessageID->new->in_brackets,
+		Data => "The following licor tower(s) have not synced in a while:\n\n$email_body"
+	);
+
+	$message->send('smtp',$config->{smtp_host},Timeout=>60,Port=>$config->{smtp_port});
 }
 
