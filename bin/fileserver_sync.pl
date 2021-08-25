@@ -9,23 +9,23 @@
 use strict;
 use warnings;
 
-use YAML qw(LoadFile);
 use File::Path qw(make_path);
 use POSIX qw(strftime);
 use FindBin qw($Bin);
 use lib $Bin . '/../lib';
 use LicorSync::Licor;
+use LicorSync::Config;
 
 sub current_time {
 	return strftime("[%Y-%m-%d %H:%M:%S] ",localtime);
 }
 
-my $local_data_dir = $Licor::config->{'local_data_dir'};
-my $backup_data_dir = $Licor::config->{'backup_data_dir'};
-my $backup_server = $Licor::config->{'backup_server'};
-my $backup_user = $Licor::config->{'backup_user'};
+my $local_data_dir = $LicorSync::Config::config->{'local_data_dir'};
+my $backup_data_dir = $LicorSync::Config::config->{'backup_data_dir'};
+my $backup_server = $LicorSync::Config::config->{'backup_server'};
+my $backup_user = $LicorSync::Config::config->{'backup_user'};
 	
-foreach my $tower (@{$Licor::towers}){
+foreach my $tower (@{$LicorSync::Config::towers}){
 	my $tower_name = $tower->{'name'};
 	print "\n".current_time()."Beginning rsync for $tower_name...\n";
 

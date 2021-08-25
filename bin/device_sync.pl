@@ -16,17 +16,19 @@ use LicorSync::Config;
 use Getopt::Long;
 
 sub help() {
-        print "Usage\n";
-        print "--dry-run        Does dry run only. No transferring of data\n";
-        print "--version        Print version\n";
-        print "--help           Prints this help\n";
+        print "Usage: $0\n";
+	print "Runs rsync to transfer data from licor devices to local server\n";
+	print LicorSync::get_source_url() . "\n";
+        print "\t--dry-run        Does dry run only. No transferring of data\n";
+        print "\t--version        Print version\n";
+        print "\t--help           Prints this help\n";
         exit 0;
 }
 
 my $dryrun = 0;
 my $version = 0;
 GetOptions ("dry-run" => \$dryrun,
-	"help" => sub { help() },
+	"h|help" => sub { help() },
 	"v|version" => \$version
 );
 
@@ -44,7 +46,7 @@ my $digest = '';
 foreach my $tower (@{$LicorSync::Config::towers}){
 	my @timenow = localtime();
 	if(not (exists $tower->{'infrequent'} and $tower->{'infrequent'} and $timenow[2]>=4) ){
-		LicorSync::Licor::rsync_flat($tower,$rsync_options);
+		LicorSync::Licor::rsync_data($tower,$rsync_options);
 	}
 
 	if(exists $tower->{'digest'} and $tower->{'digest'} and not $timenow[2]>=4){

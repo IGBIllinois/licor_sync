@@ -7,23 +7,24 @@
 # Script to archive licor data, organized by day, up until the day the daily script will be archiving
 use strict;
 use warnings;
-use YAML qw(LoadFile);
+
 use String::Util qw(trim);
 use File::Path qw(make_path);
 use FindBin qw($Bin);
 use lib $Bin . '/../lib';
 use LicorSync::Licor;
+use LicorSync::Config;
 use Data::Dumper;
 
-my $local_data_dir = $Licor::config->{'local_data_dir'};
+my $local_data_dir = $LicorSync::Config::config->{'local_data_dir'};
 
 my $archive_day = trim(`date +"\%d" -d '7 days ago'`);
 my $archive_month = trim(`date +"\%m" -d '7 days ago'`);
 my $archive_year = trim(`date +"\%Y" -d '7 days ago'`);
 
-foreach my $tower (@{$Licor::towers}){
+foreach my $tower (@{$LicorSync::Config::towers}){
 	my $tower_name = $tower->{'name'};
-	print "Archiving $tower_name...\n";
+	print "Archiving $tower_name in $local_data_dir/$tower_name/raw\n";
 	my @tower_files = glob("$local_data_dir/$tower_name/raw/*");
 	my $earliest_year = $archive_year;
 	my $earliest_month = $archive_month;

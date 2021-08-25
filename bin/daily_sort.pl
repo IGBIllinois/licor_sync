@@ -9,14 +9,14 @@
 use strict;
 use warnings;
 
-use YAML qw(LoadFile);
 use String::Util qw(trim);
 use File::Path qw(make_path);
 use FindBin qw($Bin);
 use lib $Bin . '/../lib';
 use LicorSync::Licor;
+use LicorSync::Config;
 
-my $local_data_dir = $Licor::config->{'local_data_dir'};
+my $local_data_dir = $LicorSync::Config::config->{'local_data_dir'};
 
 my $archive_day = trim(`date +"\%d" -d '7 days ago'`);
 my $archive_month = trim(`date +"\%m" -d '7 days ago'`);
@@ -25,7 +25,7 @@ my $archive_year = trim(`date +"\%Y" -d '7 days ago'`);
 my $archive_month_str = sprintf("%02d",$archive_month);
 my $archive_day_str = sprintf("%02d",$archive_day);
 	
-foreach my $tower (@{$Licor::towers}){
+foreach my $tower (@{$LicorSync::Config::towers}){
 	my $tower_name = $tower->{'name'};
 	print "Archiving $tower_name...\n";
 	
