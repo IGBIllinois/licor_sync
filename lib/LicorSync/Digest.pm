@@ -2,36 +2,14 @@
 # Author: Joe Leigh <jleigh@illinois.edu>
 # Parses the last line of a licor data file for inclusion in a nightly digest
 
-package LicorSync::LicorDigest;
+package LicorSync::Digest;
 use strict;
 use warnings;
 
 use File::Path qw(make_path);
-use YAML::Any qw(LoadFile);
 use Data::Dumper;
 use FindBin qw($Bin);
-
-use constant LICOR_DIGEST_CONFIG => 'licor_digest.yml';
-use constant LICOR_CONFIG => 'licor.yml';
-use constant LICOR_TOWERS_CONFIG => 'licor_towers.yml';
-
-unless (-e $Bin . '/../etc/' . LICOR_DIGEST_CONFIG) {
-        print "Config file /etc/" . LICOR_DIGEST_CONFIG . " does not exist\n";
-	exit 1;
-}
-our $digest_config = LoadFile($Bin . '/../etc/' . LICOR_DIGEST_CONFIG);
-unless (-e $Bin . '/../etc/' . LICOR_CONFIG) {
-        print "Config file /etc/" . LICOR_CONFIG . " does not exist\n";
-        exit 1;
-}
-our $config = LoadFile($Bin . '/../etc/' . LICOR_CONFIG);
-
-unless (-e $Bin . '/../etc/' . LICOR_TOWERS_CONFIG) {
-        print "Config file /etc/" . LICOR_TOWERS_CONFIG . " does not exist\n";
-        exit 1;
-}
-our $towers = LoadFile($Bin . '/../etc/' . LICOR_TOWERS_CONFIG);
-
+use LicorSync::Config;
 
 sub noon_file {
 	my $tower = shift;
@@ -53,7 +31,7 @@ sub digest {
 	}
 
 	# TODO pull from config file
-	my $columns = $digest_config->{columns};
+	my $columns = $LicorSync::Config::digest_config->{columns};
 
 	my $data_dir = "/home/shared/licor_data/".$tower->{name}."/raw/";
 	my $ghgFileName = LicorDigest::noon_file($tower);
@@ -124,3 +102,4 @@ sub digest {
 	}
 }
 
+1;

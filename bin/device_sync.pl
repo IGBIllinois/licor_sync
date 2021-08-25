@@ -9,23 +9,53 @@
 use File::Path qw(make_path);
 use FindBin qw($Bin);
 use lib $Bin . '/../lib';
+use LicorSync;
 use LicorSync::Licor;
-use LicorSync::LicorDigest;
+use LicorSync::Digest;
+use LicorSync::Config;
+use Getopt::Long;
 
+sub help() {
+        print "Usage\n";
+        print "--dry-run        Does dry run only. No transferring of data\n";
+        print "--version        Print version\n";
+        print "--help           Prints this help\n";
+        exit 0;
+}
+
+my $dryrun = 0;
+my $version = 0;
+GetOptions ("dry-run" => \$dryrun,
+	"help" => sub { help() },
+	"v|version" => \$version
+);
+
+if ($version) {
+	print LicorSync::get_version() . "\n";
+	exit 0;
+}
+
+my $rsync_options = "";
+if ($dryrun) {
+	$rsync_options = "--dry-run ";
+}
 my $digest = '';
-foreach my $tower (@{$LicorSync::Licor::towers}){
+
+foreach my $tower (@{$LicorSync::Config::towers}){
 	my @timenow = localtime();
 	if(not (exists $tower->{'infrequent'} and $tower->{'infrequent'} and $timenow[2]>=4) ){
-		LicorSync::Licor::rsync_flat($tower);
+		LicorSync::Licor::rsync_flat($tower,$rsync_options);
 	}
 
 	if(exists $tower->{'digest'} and $tower->{'digest'} and not $timenow[2]>=4){
-		$digest .= LicorSync::LicorDigest::digest($tower);
+		$digest .= LicorSync::Digest::digest($tower);
 	}
 }
 
 if(not $digest eq ''){
 	print $digest;
 	my $subject = "Licor Data Digest";
-	LicorSync::Licor::send_email($digest,$subject,$digest_config{'emails'});
+	if (!$dryrun) {
+		LicorSync::Licor::send_email($digest,$subject,$digest_config{'emails'});
+	}
 }

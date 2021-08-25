@@ -13,15 +13,15 @@ use POSIX;
 use FindBin;
 use File::Spec;
 use lib File::Spec->catdir($FindBin::Bin, '..', 'lib');
-use LicorSync::Licor;
+use LicorSync::Config;
 
-my $local_data_dir = $Licor::config->{'local_data_dir'};
-my $inactivity_threshold = $Licor::config->{'inactivity_threshold'};
+my $local_data_dir = $Config::config->{'local_data_dir'};
+my $inactivity_threshold = $Config::config->{'inactivity_threshold'};
 my $now = time();
 
 my $email_body = "";
 
-foreach my $tower (@{$Licor::towers}){
+foreach my $tower (@{$Config::towers}){
     my $tower_name = $tower->{'name'};
     my $raw_dir = "$local_data_dir/$tower_name/raw";
     my $latest_time = 0;
@@ -47,8 +47,8 @@ foreach my $tower (@{$Licor::towers}){
 }
 
 if($email_body ne ""){
-	my $from = $Licor::config->{'email_from'};
-	my $to = $Licor::config->{'inactivity_email_to'};
+	my $from = $Config::config->{'email_from'};
+	my $to = $Config::config->{'inactivity_email_to'};
         my $to = join ",", @$to;
 	my $body = "The following licor tower(s) have not synced in a while:\n\n$email_body";
 	my $subject = "Licor data not syncing";
