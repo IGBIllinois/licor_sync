@@ -6,6 +6,9 @@
 # 
 # Script to check raw data for inactivity
 
+use strict;
+use warnings;
+
 use POSIX;
 use FindBin;
 use File::Spec;
@@ -46,7 +49,7 @@ foreach my $tower (@{$Licor::towers}){
 if($email_body ne ""){
 	my $from = $Licor::config->{'email_from'};
 	my $to = $Licor::config->{'inactivity_email_to'};
-        my $to = join ",", @{$to;
+        my $to = join ",", @$to;
 	my $body = "The following licor tower(s) have not synced in a while:\n\n$email_body";
 	my $subject = "Licor data not syncing";
 

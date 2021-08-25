@@ -5,6 +5,9 @@
 #
 # Script to remotely delete data older than 6 months from licor devices
 
+use strict;
+use warnings;
+
 use String::Util qw(trim);
 use FindBin qw($Bin);
 use lib $Bin . '/../lib';

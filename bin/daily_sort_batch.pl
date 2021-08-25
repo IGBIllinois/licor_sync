@@ -6,6 +6,7 @@
 # 
 # Script to archive licor data, organized by day, up until the day the daily script will be archiving
 use strict;
+use warnings;
 use YAML qw(LoadFile);
 use String::Util qw(trim);
 use File::Path qw(make_path);

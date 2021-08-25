@@ -6,6 +6,9 @@
 # 
 # Script to rsync data from each tower
 
+use strict;
+use warnings;
+
 use YAML qw(LoadFile);
 use File::Path qw(make_path);
 use POSIX qw(strftime);
@@ -19,4 +22,4 @@ my $message = "test";
 my $subject = "Test Subject";
 my $to = ["dslater\@igb.illinois.edu"];
 
-LicorSync::Licor::send_email($message,$subject,$to);
+#LicorSync::Licor::send_email($message,$subject,$to);

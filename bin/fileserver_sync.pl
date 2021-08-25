@@ -6,6 +6,9 @@
 # 
 # Script to rsync data from local folder to file-server
 
+use strict;
+use warnings;
+
 use YAML qw(LoadFile);
 use File::Path qw(make_path);
 use POSIX qw(strftime);
