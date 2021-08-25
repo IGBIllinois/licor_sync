@@ -10,8 +10,8 @@ use YAML qw(LoadFile);
 use File::Path qw(make_path);
 use POSIX qw(strftime);
 use FindBin qw($Bin);
-use lib $Bin . '/../lib/perl';
-use Licor;
+use lib $Bin . '/../lib';
+use LicorSync::Licor;
 
 sub current_time {
 	return strftime("[%Y-%m-%d %H:%M:%S] ",localtime);

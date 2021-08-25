@@ -1,10 +1,9 @@
-#!/usr/bin/env perl
 # licor.pl
 # Author: Joe Leigh <jleigh@illinois.edu>
 # Encapsulates the config files
 use strict;
 $|++;
-package Licor;
+package LicorSync::Licor;
 
 use File::Path qw(make_path);
 use YAML::Any qw(LoadFile);

@@ -4,4 +4,10 @@ backup_server:
 backup_user:
 inactivity_threshold: 1209600 # 2 weeks
 inactivity_email_to:
-inactivity_email_from:
+email_from:
+smtp_host: localhost
+smtp_port: 25
+smtp_username:
+smtp_password:
+smtp_tls: false
+smtp_ssl: false

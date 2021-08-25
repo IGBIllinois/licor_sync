@@ -10,9 +10,9 @@ use YAML qw(LoadFile);
 use File::Path qw(make_path);
 use POSIX qw(strftime);
 use FindBin qw($Bin);
-use lib $Bin . '/../lib/perl';
-use Licor;
-use LicorDigest;
+use lib $Bin . '/../lib';
+use LicorSync::Licor;
+use LicorSync::LicorDigest;
 use Data::Dumper;
 
 sub current_time {

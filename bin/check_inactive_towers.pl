@@ -11,8 +11,8 @@ use Email::MIME;
 use Email::Sender::Simple qw(sendmail);
 use FindBin;
 use File::Spec;
-use lib File::Spec->catdir($FindBin::Bin, '..', 'lib', 'perl');
-use Licor;
+use lib File::Spec->catdir($FindBin::Bin, '..', 'lib');
+use LicorSync::Licor;
 
 my $local_data_dir = $Licor::config->{'local_data_dir'};
 my $inactivity_threshold = $Licor::config->{'inactivity_threshold'};
@@ -47,7 +47,7 @@ foreach my $tower (@{$Licor::towers}){
 }
 
 if($email_body ne ""){
-    my $from = $Licor::config->{'inactivity_email_from'};
+    my $from = $Licor::config->{'email_from'};
     my $to = $Licor::config->{'inactivity_email_to'};
     my $message = Email::MIME->create(
         header_str => [

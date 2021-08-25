@@ -1,10 +1,9 @@
-#!/usr/bin/env perl
 # LicorDigest.pm
 # Author: Joe Leigh <jleigh@illinois.edu>
 # Parses the last line of a licor data file for inclusion in a nightly digest
 use strict;
 $|++;
-package LicorDigest;
+package LicorSync::LicorDigest;
 
 use File::Path qw(make_path);
 use YAML::Any qw(LoadFile);

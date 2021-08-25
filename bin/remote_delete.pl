@@ -7,8 +7,8 @@
 
 use String::Util qw(trim);
 use FindBin qw($Bin);
-use lib $Bin . '/../lib/perl';
-use Licor;
+use lib $Bin . '/../lib';
+use LicorSync::Licor;
 
 my $archive_month = trim(`date +"\%m" -d '6 months ago'`);
 my $archive_year = trim(`date +"\%Y" -d '6 months ago'`);

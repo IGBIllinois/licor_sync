@@ -10,8 +10,8 @@ use YAML qw(LoadFile);
 use String::Util qw(trim);
 use File::Path qw(make_path);
 use FindBin qw($Bin);
-use lib $Bin . '/../lib/perl';
-use Licor;
+use lib $Bin . '/../lib';
+use LicorSync::Licor;
 
 my $local_data_dir = $Licor::config->{'local_data_dir'};
 
