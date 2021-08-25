@@ -44,11 +44,12 @@ foreach my $tower (@{$Licor::towers}){
 	}
 
 	if(exists $tower->{'digest'} and $tower->{'digest'} and not $timenow[2]>=4){
-		$digest .= LicorDigest::digest($tower);
+		$digest .= LicorSync::LicorDigest::digest($tower);
 	}
 }
 
 if(not $digest eq ''){
 	print $digest;
-	LicorDigest::emailDigest($digest);
+	my $subject = "Licor Data Digest";
+	LicorSync::Licor::send_email($digest,$subject,$digest_config{'emails'});
 }

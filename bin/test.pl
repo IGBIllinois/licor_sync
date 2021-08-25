@@ -16,4 +16,7 @@ use LicorSync::LicorDigest;
 
 my $message = "test";
 
-LicorSync::LicorDigest::emailDigest($message);
+my $subject = "Test Subject";
+my $to = ["dslater\@igb.illinois.edu"];
+
+LicorSync::Licor::send_email($message,$subject,$to);

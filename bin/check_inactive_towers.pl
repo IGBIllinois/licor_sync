@@ -7,8 +7,6 @@
 # Script to check raw data for inactivity
 
 use POSIX;
-use MIME::Lite;
-use Email::MessageID;
 use FindBin;
 use File::Spec;
 use lib File::Spec->catdir($FindBin::Bin, '..', 'lib');
@@ -49,15 +47,9 @@ if($email_body ne ""){
 	my $from = $Licor::config->{'email_from'};
 	my $to = $Licor::config->{'inactivity_email_to'};
         my $to = join ",", @{$to;
+	my $body = "The following licor tower(s) have not synced in a while:\n\n$email_body";
+	my $subject = "Licor data not syncing";
 
-	my $message = MIME::Lite->new(
-		From => $config->{email_from},
-		To => $to,
-		Subject => 'Licor data not syncing',
-		'Message-ID' => Email::MessageID->new->in_brackets,
-		Data => "The following licor tower(s) have not synced in a while:\n\n$email_body"
-	);
-
-	$message->send('smtp',$config->{smtp_host},Timeout=>60,Port=>$config->{smtp_port});
+	LicorSync::Licor::send_email($body,$subject,$to);
 }
 

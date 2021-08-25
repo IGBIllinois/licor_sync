@@ -8,9 +8,7 @@ package LicorSync::LicorDigest;
 use File::Path qw(make_path);
 use YAML::Any qw(LoadFile);
 use Data::Dumper;
-use MIME::Lite;
 use FindBin qw($Bin);
-use Email::MessageID;
 
 use constant LICOR_DIGEST_CONFIG => 'licor_digest.yml';
 use constant LICOR_CONFIG => 'licor.yml';
@@ -125,19 +123,3 @@ sub digest {
 	}
 }
 
-sub emailDigest {
-	my $digest = shift;
-
-	my $recipientArr = $digest_config->{emails};
-	my $recipientStr = join ",", @{$recipientArr};
-
-	my $message = MIME::Lite->new(
-		From => $config->{email_from},
-		To => $recipientStr,
-		Subject => 'Licor Data Digest',
-		'Message-ID' => Email::MessageID->new->in_brackets,
-		Data => $digest,
-		);
-	
-	$message->send('smtp',$config->{smtp_host},Timeout=>60,Port=>$config->{smtp_port});
-}
