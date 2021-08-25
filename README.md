@@ -2,6 +2,8 @@
 
 # Licor Sync
 * Syncs data from Licor 7200 and 7500 devices to a linux server using rsync
+* Automatically tar.gz the data by day
+* Sends Email alerts if data is not syncing
 
 ## Requirements
 * rsync
