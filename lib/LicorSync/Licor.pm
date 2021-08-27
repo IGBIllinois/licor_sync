@@ -61,8 +61,8 @@ sub gzip_data {
 	if(-f $tar_name){
 		print "Already archived. Skipping.\n";
 	} else {
-		my @files_to_tar = glob("$local_data_dir/$tower_name/raw/$archive_year-$archive_month-$archive_day*");
-		push(@files_to_tar,glob("$local_data_dir/$tower_name/raw/$archive_year/$archive_month/$archive_year-$archive_month-$archive_day*"));
+		my @files_to_tar_flat = glob("$local_data_dir/$tower_name/raw/$archive_year-$archive_month-$archive_day*");
+		my @files_to_tar_dir = glob("$local_data_dir/$tower_name/raw/$archive_year/$archive_month/$archive_year-$archive_month-$archive_day*");
 		if(scalar(@files_to_tar) == 0){
 			print "No files found. Skipping.\n";
 		}
