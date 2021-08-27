@@ -14,7 +14,6 @@ use FindBin qw($Bin);
 use lib $Bin . '/../lib';
 use LicorSync::Licor;
 use LicorSync::Config;
-use Data::Dumper;
 
 my $local_data_dir = $LicorSync::Config::config->{'local_data_dir'};
 

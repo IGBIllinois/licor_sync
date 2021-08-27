@@ -9,7 +9,6 @@
 * rsync
 * Perl
   * Perl Yaml
-  * Perl Data-Dumper
   * Perl MIME-Lite
   * Perl String-Util
   * Email::MessageID

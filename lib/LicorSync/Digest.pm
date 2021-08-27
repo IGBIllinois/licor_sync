@@ -7,7 +7,6 @@ use strict;
 use warnings;
 
 use File::Path qw(make_path);
-use Data::Dumper;
 use FindBin qw($Bin);
 use LicorSync::Config;
 

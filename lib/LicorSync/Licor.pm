@@ -7,7 +7,6 @@ use warnings;
 
 use File::Path qw(make_path);
 use POSIX qw(strftime);
-use Data::Dumper;
 use FindBin qw($Bin);
 use MIME::Lite;
 use Email::MessageID;
