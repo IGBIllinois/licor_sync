@@ -11,9 +11,7 @@ use warnings;
 
 use POSIX;
 use FindBin;
-use File::Spec;
 use File::Find::Rule;
-#use lib File::Spec->catdir($FindBin::Bin, '..', 'lib');
 use FindBin qw($Bin);
 use lib $Bin . '/../lib';
 use LicorSync::Config;
@@ -56,4 +54,6 @@ if($email_body ne ""){
 
 	LicorSync::Licor::send_email($body,$subject,$to);
 }
-
+else {
+	print "All Licor Devices syncing\n";
+}
