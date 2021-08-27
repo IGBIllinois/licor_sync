@@ -2,4 +2,5 @@
   file_name:
   ip:
   data_dir:
-  remove_source_files:
+  remove_old: false
+  infrequent: false
