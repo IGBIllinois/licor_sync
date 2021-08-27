@@ -12,7 +12,10 @@ use warnings;
 use POSIX;
 use FindBin;
 use File::Spec;
-use lib File::Spec->catdir($FindBin::Bin, '..', 'lib');
+use File::Find::Rule;
+#use lib File::Spec->catdir($FindBin::Bin, '..', 'lib');
+use FindBin qw($Bin);
+use lib $Bin . '/../lib';
 use LicorSync::Config;
 use LicorSync::Licor;
 
@@ -26,12 +29,10 @@ foreach my $tower (@{$LicorSync::Config::towers}){
     my $tower_name = $tower->{'name'};
     my $raw_dir = "$local_data_dir/$tower_name/raw";
     my $latest_time = 0;
-    opendir(my $raw_dh, $raw_dir);
-    my @raw_files = readdir($raw_dh);
-    closedir $raw_dh;
+    my @raw_files = File::Find::Rule->file()->name("*.ghg")->in("$local_data_dir/$tower_name/raw");
     foreach my $file (@raw_files){
         if(!($file =~ m/^\./m)){
-            my $modify_time = (stat("$raw_dir/$file"))[9];
+            my $modify_time = (stat("$file"))[9];
             if($modify_time > $latest_time){
                 $latest_time = $modify_time;
             }

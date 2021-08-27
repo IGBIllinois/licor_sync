@@ -35,6 +35,7 @@ smtp_port: 25
   data_dir:
   remove_old: false
   infrequent: false
+  digest: false
 ```
 * name - Common name for the tower
 * file_name - Filename suffix for the .ghg files.  Files are in the format 2021-08-26T213000_[file_name].ghg
@@ -42,6 +43,7 @@ smtp_port: 25
 * data_dir - Directory on licor device where data is stored.  This is normally /home/licor/data/raw/
 * remove_old - Boolean - Remove data from licor device
 * infrequent - Boolean - Removes infrequent data
+* digest - Boolean - Sends email digest for tower
 
 ## licor_digest.yml - Sends email digest of data 
 * Copy /etc/licor_digest.yml.dist to /etc/licor_digest.yml
