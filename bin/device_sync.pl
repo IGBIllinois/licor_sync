@@ -20,8 +20,8 @@ sub help() {
 	print "Runs rsync to transfer data from licor devices to local server\n";
 	print LicorSync::get_source_url() . "\n";
         print "\t--dry-run        Does dry run only. No transferring of data\n";
-        print "\t--version        Print version\n";
-        print "\t--help           Prints this help\n";
+        print "\t-v|--version        Print version\n";
+        print "\t-h|--help           Prints this help\n";
         exit 0;
 }
 
@@ -30,7 +30,7 @@ my $version = 0;
 GetOptions ("dry-run" => \$dryrun,
 	"h|help" => sub { help() },
 	"v|version" => \$version
-);
+) or die("\n");
 
 if ($version) {
 	print LicorSync::get_version() . "\n";

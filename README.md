@@ -12,8 +12,7 @@
   * Perl Data-Dumper
   * Perl MIME-Lite
   * Perl String-Util
-  * Perl Email::MIME
-
+  * Email::MessageID
 ## Installation
 * Download the latest tag released from https://github.com/IGBIllinois/licor_sync/releases or git clone the repository
 ```

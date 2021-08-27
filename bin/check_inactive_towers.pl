@@ -39,11 +39,11 @@ foreach my $tower (@{$LicorSync::Config::towers}){
     }
     if($latest_time > 0 && $now - $latest_time > $inactivity_threshold){
         my $days = floor(($now-$latest_time)/(60*60*24));
-	    print "No data from $tower_name in $days days\n";
-        $email_body = $email_body . "No data from $tower_name in $days days\n";
+	    print "No data from $tower_name with IP addresss $tower->{'ip'} in $days days\n";
+        $email_body = $email_body . "No data from $tower_name with IP address $tower->{'ip'} in $days days\n";
     } elsif($latest_time == 0){
-	    print "No data from $tower_name in >6 months\n";
-        $email_body = $email_body . "No data from $tower_name in >6 months\n";
+	    print "No data from $tower_name with IP address $tower->{'ip'} in >6 months\n";
+        $email_body = $email_body . "No data from $tower_name with IP addres $tower->{'ip'} in >6 months\n";
     }
 }
 

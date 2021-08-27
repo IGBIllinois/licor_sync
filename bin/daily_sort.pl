@@ -15,36 +15,44 @@ use FindBin qw($Bin);
 use lib $Bin . '/../lib';
 use LicorSync::Licor;
 use LicorSync::Config;
+use LicorSync;
+use Getopt::Long;
+
+sub help() {
+        print "Usage: $0\n";
+        print "gzips data from a single day into a tar.gz archive\n";
+        print LicorSync::get_source_url() . "\n";
+	print "\t--days-old	 Number of days old (Default: 7)\n";
+        print "\t--dry-run        Does dry run only\n";
+        print "\t-v|--version        Print version\n";
+        print "\t-h|--help           Prints this help\n";
+        exit 0;
+}
+my $deletedaysold = 180;
+my $daysold = 7;
+my $dryrun = 0;
+my $version = 0;
+GetOptions ("days-old=i" => \$daysold,
+	"dry-run" => \$dryrun,
+        "h|help" => sub { help() },
+        "v|version" => \$version
+) or die("\n");
+
+if ($version) {
+        print LicorSync::get_version() . "\n";
+        exit 0;
+}
+
 
 my $local_data_dir = $LicorSync::Config::config->{'local_data_dir'};
 
-my $archive_day = trim(`date +"\%d" -d '7 days ago'`);
-my $archive_month = trim(`date +"\%m" -d '7 days ago'`);
-my $archive_year = trim(`date +"\%Y" -d '7 days ago'`);
+my $archive_day = trim(`date +"\%d" -d '$daysold days ago'`);
+my $archive_month = trim(`date +"\%m" -d '$daysold days ago'`);
+my $archive_year = trim(`date +"\%Y" -d '$daysold days ago'`);
 
 my $archive_month_str = sprintf("%02d",$archive_month);
 my $archive_day_str = sprintf("%02d",$archive_day);
-	
 foreach my $tower (@{$LicorSync::Config::towers}){
-	my $tower_name = $tower->{'name'};
-	print "Archiving $tower_name...\n";
-	
-	my $tar_name = "$local_data_dir/$tower_name/compressed/$archive_year/$archive_month_str/$tower_name-$archive_year-$archive_month_str-$archive_day_str.tar.gz";
-	print "\tArchiving $tower_name $archive_year/$archive_month_str/$archive_day_str... ";
-	if(-f $tar_name){
-		print "Already archived. Skipping.\n";
-	} else {
-		my @files_to_tar = glob("$local_data_dir/$tower_name/raw/$archive_year-$archive_month_str-$archive_day_str*");
-		if(scalar(@files_to_tar) == 0){
-			print "No files found. Skipping.\n";
-		} else {
-			make_path("$local_data_dir/$tower_name/compressed/$archive_year/$archive_month_str");
-			# Tar up the data from 7 days ago
-			`cd $local_data_dir/$tower_name/raw; tar -cvzf $tar_name $archive_year-$archive_month_str-$archive_day_str* 2>&1; cd -`;
-			print "Done.\n";
-		}
-	}
-
-	# Delete files once theyre 6+ months old
-	`find $local_data_dir/$tower_name/raw -type f -mtime +180 -exec rm {} \\;`;
+	LicorSync::Licor::gzip_data($tower,$archive_year,$archive_month_str,$archive_day_str,$dryrun);
+	LicorSync::Licor::delete_data($tower,$deletedaysold,$dryrun);
 }
