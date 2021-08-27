@@ -63,16 +63,20 @@ sub gzip_data {
 	} else {
 		my @files_to_tar_flat = glob("$local_data_dir/$tower_name/raw/$archive_year-$archive_month-$archive_day*");
 		my @files_to_tar_dir = glob("$local_data_dir/$tower_name/raw/$archive_year/$archive_month/$archive_year-$archive_month-$archive_day*");
-		if(scalar(@files_to_tar) == 0){
+		if((scalar(@files_to_tar_flat) == 0) && (scalar(@files_to_tar_dir) == 0)){
 			print "No files found. Skipping.\n";
 		}
 		else {
 			make_path("$local_data_dir/$tower_name/compressed/$archive_year/$archive_month");
 			#Tar up the data from 7 days ago
-			#`cd $local_data_dir/$tower_name/raw; tar -cvzf $tar_name $archive_year-$archive_month_str-$archive_day_str* 2>&1; cd -`;
-			my $file_list = join(' ',@files_to_tar);
-			my $cmd = "tar -cvzf $tar_name $file_list 2>&1;";
-			print $cmd . "\n";
+			my $cmd = "";
+			if (scalar(@files_to_tar_flat)) {
+				$cmd = "cd $local_data_dir/$tower_name/raw; tar -cvzf $tar_name $archive_year-$archive_month-$archive_day*.ghg 2>&1 > /dev/null; cd - > /dev/null";
+			}
+			elsif (scalar(@files_to_tar_dir)) {
+				$cmd = "cd $local_data_dir/$tower_name/raw/$archive_year/$archive_month; tar -cvzf $tar_name $archive_year-$archive_month-$archive_day*.ghg 2>&1 > /dev/null; cd - > /dev/null";
+			}
+			#print $cmd . "\n";
 			if (!$dryrun) {
 				system $cmd;
 			}
@@ -89,7 +93,8 @@ sub delete_data {
 	my $tower_name = $tower->{'name'};
 	my $local_data_dir = $LicorSync::Config::config->{'local_data_dir'};
 	my $cmd = "find $local_data_dir/$tower_name/raw -type f -mtime +$days_old -exec rm {} \\;";
-	print $cmd . "\n";
+	print "Removing data from $local_data_dir/$tower_name/raw older than $days_old days old\n";
+	#print $cmd . "\n";
 	if (!$dryrun) {
 		system $cmd;
 	}
