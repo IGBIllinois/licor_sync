@@ -29,7 +29,7 @@ foreach my $tower (@{$LicorSync::Config::towers}){
 	my $tower_name = $tower->{'name'};
 	print "\n".current_time()."Beginning rsync for $tower_name...\n";
 
-	my $cmd =  "/usr/bin/rsync --chmod=D2770,F660 --ignore-existing -rtuv --timeout=1000 $local_data_dir/$tower_name/compressed $backup_user\@$backup_server:$backup_data_dir/$tower_name/\n";
+	my $cmd =  "/usr/bin/rsync --chmod=D2750,F640 --ignore-existing -rtuv --timeout=1000 $local_data_dir/$tower_name/compressed $backup_user\@$backup_server:$backup_data_dir/$tower_name/\n";
 	print $cmd;
 	system $cmd;
 
