@@ -1,0 +1,25 @@
+name: Build Status
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  perl_tester:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup Perl
+        uses: shogo82148/actions-setup-perl@v1
+        with:
+          perl-version: '5.26'
+      - name: perl -V
+        run: perl -V
+
+      - name: Test cpanm
+        run: cpanm --installdeps .
+
+      - name: Test Perl Syntax
+        run: if find . -name '*.pl' -name '*.cgi' -name '*.pm' -exec perl -c {} 2>&1 \; | grep "syntax error"; then exit 1; fi
