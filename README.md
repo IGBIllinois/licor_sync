@@ -13,6 +13,7 @@
   * String-Util
   * Email::MessageID
   * File::Find::Rule
+  * FindBin
 ## Installation
 * Download the latest tag released from https://github.com/IGBIllinois/licor_sync/releases or git clone the repository
 ```
@@ -24,8 +25,23 @@ cpanm --installdeps .
 ```
 * Install Perl Modules with yum/dnf
 ```
-dnf -y install perl-YAML perl-MIME-Lite perl-String-Util perl-Email-MessageID perl-File-Find-Rule
+dnf -y install perl-YAML perl-MIME-Lite perl-String-Util perl-Email-MessageID perl-File-Find-Rule perl-FindBin
 ```
+* If installing on Rocky Linux 8 or 9, the ssh cipher settings need changing.  Create the file ~/.ssh/config with the following.  Change HOSTNAME to the IP address of the licor device
+<pre>
+Host HOSTNAME
+        KexAlgorithms +diffie-hellman-group1-sha1
+        Ciphers +aes128-cbc
+        HostKeyAlgorithms +ssh-rsa
+        PubkeyAcceptedKeyTypes +ssh-rsa
+        RSAMinSize 1024
+        SetEnv TERM=vt100
+</pre>
+* Change the SSH Cipher settings to LEGACY
+<pre>
+update-crypto-policies --set LEGACY
+</pre>
+
 ### Configuration
 How to setup config files is at [docs/config.md](docs/config.md)
 
