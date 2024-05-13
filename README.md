@@ -8,11 +8,11 @@
 ## Requirements
 * rsync
 * Perl
-  * Perl Yaml
-  * Perl MIME-Lite
-  * Perl String-Util
+  * YAML
+  * MIME-Lite
+  * String-Util
   * Email::MessageID
-
+  * File::Find::Rule
 ## Installation
 * Download the latest tag released from https://github.com/IGBIllinois/licor_sync/releases or git clone the repository
 ```
@@ -22,7 +22,10 @@ git clone https://github.com/IGBIllinois/licor_sync.git
 ```
 cpanm --installdeps .
 ```
-
+* Install Perl Modules with yum/dnf
+```
+dnf -y install perl-YAML perl-MIME-Lite perl-String-Util perl-Email-MessageID perl-File-Find-Rule
+```
 ### Configuration
 How to setup config files is at [docs/config.md](docs/config.md)
 
