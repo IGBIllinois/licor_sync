@@ -30,6 +30,7 @@ sub rsync_data {
 	my $ip = $tower->{'ip'};
 	my $data_dir = $tower->{'data_dir'};
 	my $tower_name = $tower->{'name'};
+		
 	my $local_data_dir = $LicorSync::Config::config->{'local_data_dir'};
 	print "\n".current_time()."Beginning rsync for $tower_name...\n";
 	
@@ -37,6 +38,9 @@ sub rsync_data {
 
 	if (exists $tower->{'remove_source_files'} and $tower->{'remove_source_files'}) {
 		$rsync_options .= "--remove-source-files ";
+	}
+	if (exists $tower->{'port'}) {
+		$rsync_options .= "-e 'ssh -p " . $tower->{'port'} . "' ";
 	}
 	my $cmd = "/usr/bin/rsync -auv " . $rsync_options . "--timeout=1000 --chmod=Du=rwx,Dgo=rx,Fu=rw,Fog=r --include \"*/\" --include=*.ghg --exclude='*' licor\@$ip:$data_dir $local_data_dir/$tower_name/raw";
 	print $cmd . "\n";
