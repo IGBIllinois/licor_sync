@@ -36,6 +36,7 @@ smtp_port: 25
   remove_old: false
   infrequent: false
   digest: false
+  port: 22
 ```
 * name - Common name for the tower
 * file_name - Filename suffix for the .ghg files.  Files are in the format 2021-08-26T213000_[file_name].ghg
@@ -44,6 +45,7 @@ smtp_port: 25
 * remove_old - Boolean - Remove data from licor device
 * infrequent - Boolean - Removes infrequent data
 * digest - Boolean - Sends email digest for tower
+* port - Integer - Specifies ssh port to use.  Optional and defaults to port 22
 
 ## licor_digest.yml - Sends email digest of data 
 * Copy /etc/licor_digest.yml.dist to /etc/licor_digest.yml
