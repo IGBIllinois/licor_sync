@@ -20,7 +20,7 @@ my $archive_month_str = sprintf("%02d",$archive_month);
 
 foreach my $tower (@{$LicorSync::Config::towers}){
 	if(exists $tower->{'remove_old'} and $tower->{'remove_old'}){
-		my $command = "ssh licor\@$tower->{ip} \"rm $tower->{data_dir}$archive_year-$archive_month_str*\"";
+		my $command = "ssh licor\@$tower->{ip} \"rm $tower->{data_dir}$archive_year/$archive_month_str/*\"";
 		print "$command\n";
 		`$command`;
 	}
