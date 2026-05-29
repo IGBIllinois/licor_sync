@@ -54,5 +54,5 @@ my $archive_month_str = sprintf("%02d",$archive_month);
 my $archive_day_str = sprintf("%02d",$archive_day);
 foreach my $tower (@{$LicorSync::Config::towers}){
 	LicorSync::Licor::gzip_data($tower,$archive_year,$archive_month_str,$archive_day_str,$dryrun);
-	LicorSync::Licor::delete_data($tower,$deletedaysold,$dryrun);
+	LicorSync::Licor::delete_local_data($tower,$deletedaysold,$dryrun);
 }

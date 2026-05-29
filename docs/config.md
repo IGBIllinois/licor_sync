@@ -34,6 +34,7 @@ smtp_port: 25
   ip:
   data_dir:
   remove_old: false
+  remote_delete_age: 6
   infrequent: false
   digest: false
   port: 22
@@ -43,6 +44,7 @@ smtp_port: 25
 * ip - IP address of licor device
 * data_dir - Directory on licor device where data is stored.  This is normally /home/licor/data/raw/
 * remove_old - Boolean - Remove data from licor device
+* remote_delete_age - Integer - Removes data older than X number of months
 * infrequent - Boolean - Removes infrequent data
 * digest - Boolean - Sends email digest for tower
 * port - Integer - Specifies ssh port to use.  Optional and defaults to port 22

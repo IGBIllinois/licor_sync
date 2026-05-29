@@ -6,11 +6,15 @@ use strict;
 use warnings;
 
 use File::Path qw(make_path);
+use String::Util qw(trim);
 use POSIX qw(strftime);
 use FindBin qw($Bin);
 use MIME::Lite;
 use Email::MessageID;
 use LicorSync::Config;
+
+use constant SSH_PORT => 22;
+use constant REMOTE_DELETE_AGE => 6;
 
 #Creates local dir for specified tower
 sub create_local_dir {
@@ -30,7 +34,6 @@ sub rsync_data {
 	my $ip = $tower->{'ip'};
 	my $data_dir = $tower->{'data_dir'};
 	my $tower_name = $tower->{'name'};
-		
 	my $local_data_dir = $LicorSync::Config::config->{'local_data_dir'};
 	print "\n".current_time()."Beginning rsync for $tower_name...\n";
 	
@@ -89,7 +92,7 @@ sub gzip_data {
 	}
 }
 
-sub delete_data {
+sub delete_local_data {
 	my $tower = shift;
 	my $days_old = shift;
 	my $dryrun = shift;
@@ -102,6 +105,35 @@ sub delete_data {
 		system $cmd;
 	}
 	
+
+}
+
+sub delete_remote_data {
+	my $tower = shift;
+	my $dryrun = shift;
+	my $remote_delete_age = REMOTE_DELETE_AGE;
+	if (exists $tower->{'remote_delete_age'}) {
+		$remote_delete_age = $tower->{'remote_delete_age'};
+	}	
+	my $archive_month = trim(`date +"\%m" -d '$remote_delete_age months ago'`);
+	my $archive_year = trim(`date +"\%Y" -d '$remote_delete_age months ago'`);
+	my $archive_month_str = sprintf("%02d",$archive_month);
+	my $ssh_options = "";
+	
+	if(exists $tower->{'remove_old'} and $tower->{'remove_old'}){
+		my $cmd = "";
+		if (exists $tower->{'port'}) {
+	                $ssh_options .= "-p " . $tower->{'port'} . " ";
+        	}
+		if ($dryrun) {
+			$cmd = "ssh " . $ssh_options . "licor\@$tower->{ip} \"ls $tower->{data_dir}$archive_year/$archive_month_str/*\"";
+		}
+		else {
+                	$cmd = "ssh " . $ssh_options . "licor\@$tower->{ip} \"rm $tower->{data_dir}$archive_year/$archive_month_str/*\"";
+		}
+                print "$cmd\n";
+                system $cmd;
+        }
 
 }
 sub current_time {

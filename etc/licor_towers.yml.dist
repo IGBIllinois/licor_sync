@@ -3,6 +3,7 @@
   ip:
   data_dir:
   remove_old: false
+  remote_delete_age: 6
   infrequent: false
   digest: false
   port: 22
