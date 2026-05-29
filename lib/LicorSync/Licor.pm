@@ -14,6 +14,7 @@ use Email::MessageID;
 use LicorSync::Config;
 
 use constant SSH_PORT => 22;
+use constant SSH_TIMEOUT => 1000;
 use constant REMOTE_DELETE_AGE => 6;
 
 #Creates local dir for specified tower
@@ -118,7 +119,7 @@ sub delete_remote_data {
 	my $archive_month = trim(`date +"\%m" -d '$remote_delete_age months ago'`);
 	my $archive_year = trim(`date +"\%Y" -d '$remote_delete_age months ago'`);
 	my $archive_month_str = sprintf("%02d",$archive_month);
-	my $ssh_options = "";
+	my $ssh_options = "-o ConnectTimeout=" . SSH_TIMEOUT . " ";
 	
 	if(exists $tower->{'remove_old'} and $tower->{'remove_old'}){
 		my $cmd = "";
